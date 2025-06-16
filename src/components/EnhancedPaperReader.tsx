@@ -1,23 +1,6 @@
 
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Button } from '@/components/ui/button';
-import { Avatar } from '@/components/ui/avatar';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { 
-  MessageSquare, 
-  Highlighter, 
-  Bot, 
-  ThumbsUp, 
-  Calendar,
-  Users,
-  ExternalLink,
-  GitBranch,
-  Badge,
-  Clock
-} from 'lucide-react';
 import { mockPaperData, mockComments } from '@/data/mockPaperData';
 import { Comment, Highlight as HighlightType } from '@/types/paper';
 import PaperInfoSidebar from './PaperInfoSidebar';
