@@ -26,6 +26,7 @@ const App = () => (
             <Route path="/" element={<Landing />} />
             <Route path="/feed" element={<Feed />} />
             <Route path="/papers" element={<PaperReader />} />
+            <Route path="/papers/:paperId" element={<PaperReader />} />
             <Route path="/events" element={<Events />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
