@@ -1,21 +1,34 @@
 
 import React from 'react';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, X } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { PaperMetadata } from '@/types/paper';
 
 interface PaperInfoSidebarProps {
   paper: PaperMetadata;
   selectedVersion: string;
   setSelectedVersion: (version: string) => void;
+  onClose: () => void;
 }
 
-const PaperInfoSidebar = ({ paper, selectedVersion, setSelectedVersion }: PaperInfoSidebarProps) => {
+const PaperInfoSidebar = ({ paper, selectedVersion, setSelectedVersion, onClose }: PaperInfoSidebarProps) => {
   const currentVersion = paper.versions.find(v => v.version === selectedVersion);
 
   return (
-    <div className="w-80 bg-white border-r border-gray-200 overflow-y-auto">
+    <div className="w-80 bg-white border-r border-gray-200 overflow-y-auto h-full shadow-lg">
       <div className="p-6">
-        <h2 className="text-lg font-semibold mb-4">Paper Information</h2>
+        {/* Header with close button */}
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-lg font-semibold">Paper Information</h2>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={onClose}
+            className="h-8 w-8 p-0"
+          >
+            <X size={16} />
+          </Button>
+        </div>
         
         {/* Version Selector */}
         <div className="mb-6">

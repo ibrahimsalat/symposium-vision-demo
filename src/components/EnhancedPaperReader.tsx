@@ -15,6 +15,10 @@ const EnhancedPaperReader = () => {
   const [popupPosition, setPopupPosition] = useState({ x: 0, y: 0 });
   const [highlights, setHighlights] = useState<HighlightType[]>([]);
   const [activeTab, setActiveTab] = useState("comments");
+  
+  // New state for sidebar visibility
+  const [showInfoSidebar, setShowInfoSidebar] = useState(false);
+  const [showCommentsSidebar, setShowCommentsSidebar] = useState(false);
 
   const paper = mockPaperData;
   const currentVersion = paper.versions.find(v => v.version === selectedVersion);
@@ -58,35 +62,61 @@ const EnhancedPaperReader = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="flex h-screen">
-        <PaperInfoSidebar 
-          paper={paper}
-          selectedVersion={selectedVersion}
-          setSelectedVersion={setSelectedVersion}
-        />
-        
-        <PaperContent
-          currentVersion={currentVersion}
-          onTextSelection={handleTextSelection}
-          showActionPopup={showActionPopup}
-          popupPosition={popupPosition}
-          selectedText={selectedText}
-          onAddComment={addComment}
-          onAddHighlight={addHighlight}
-          onAskAI={askAI}
-        />
+    <div className="min-h-screen bg-gray-50 relative">
+      {/* Info Sidebar - slides in from left */}
+      {showInfoSidebar && (
+        <>
+          <div 
+            className="fixed inset-0 bg-black/20 z-40"
+            onClick={() => setShowInfoSidebar(false)}
+          />
+          <div className="fixed left-0 top-0 h-full z-50 animate-slide-in-left">
+            <PaperInfoSidebar 
+              paper={paper}
+              selectedVersion={selectedVersion}
+              setSelectedVersion={setSelectedVersion}
+              onClose={() => setShowInfoSidebar(false)}
+            />
+          </div>
+        </>
+      )}
 
-        <PaperCommentsSidebar
-          comments={comments}
-          highlights={highlights}
-          paper={paper}
-          selectedVersion={selectedVersion}
-          setSelectedVersion={setSelectedVersion}
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-        />
-      </div>
+      {/* Comments Sidebar - slides in from right */}
+      {showCommentsSidebar && (
+        <>
+          <div 
+            className="fixed inset-0 bg-black/20 z-40"
+            onClick={() => setShowCommentsSidebar(false)}
+          />
+          <div className="fixed right-0 top-0 h-full z-50 animate-slide-in-right">
+            <PaperCommentsSidebar
+              comments={comments}
+              highlights={highlights}
+              paper={paper}
+              selectedVersion={selectedVersion}
+              setSelectedVersion={setSelectedVersion}
+              activeTab={activeTab}
+              setActiveTab={setActiveTab}
+              onClose={() => setShowCommentsSidebar(false)}
+            />
+          </div>
+        </>
+      )}
+
+      {/* Main Content - now full width */}
+      <PaperContent
+        currentVersion={currentVersion}
+        onTextSelection={handleTextSelection}
+        showActionPopup={showActionPopup}
+        popupPosition={popupPosition}
+        selectedText={selectedText}
+        onAddComment={addComment}
+        onAddHighlight={addHighlight}
+        onAskAI={askAI}
+        onToggleInfo={() => setShowInfoSidebar(!showInfoSidebar)}
+        onToggleComments={() => setShowCommentsSidebar(!showCommentsSidebar)}
+        commentsCount={comments.length}
+      />
     </div>
   );
 };
