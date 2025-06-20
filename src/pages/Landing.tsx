@@ -3,20 +3,10 @@ import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Play } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { useToast } from '@/hooks/use-toast';
+import SignupDialog from '@/components/SignupDialog';
 
 const Landing = () => {
   const featuresRef = useRef<HTMLDivElement>(null);
-  const toast = useToast();
-  
-  const handleEarlyAccess = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    toast.toast({
-      title: "Sign up successful!",
-      description: "You're on the list for early access.",
-    });
-  };
   
   const scrollToFeatures = () => {
     if (featuresRef.current) {
@@ -37,9 +27,11 @@ const Landing = () => {
               We're reimagining academia — with community, collaboration, and fair recognition at its core.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in">
-              <Button asChild className="btn-primary text-lg h-12">
-                <Link to="#early-access">Sign Up for Early Access</Link>
-              </Button>
+              <SignupDialog>
+                <Button className="btn-primary text-lg h-12">
+                  Sign Up for Early Access
+                </Button>
+              </SignupDialog>
               <Button 
                 variant="outline" 
                 onClick={scrollToFeatures}
@@ -244,17 +236,11 @@ const Landing = () => {
               Get notified about product launches, updates, and behind-the-scenes development.
             </p>
             
-            <form onSubmit={handleEarlyAccess} className="flex flex-col sm:flex-row gap-4">
-              <Input 
-                type="email" 
-                placeholder="Your email address" 
-                className="rounded-md flex-grow" 
-                required 
-              />
-              <Button type="submit" className="bg-teal hover:bg-teal-light">
+            <SignupDialog>
+              <Button className="bg-teal hover:bg-teal-light text-lg px-8 py-3">
                 Sign Up for Early Access
               </Button>
-            </form>
+            </SignupDialog>
           </div>
         </div>
       </section>
