@@ -31,11 +31,69 @@ const PaperContent = ({
   onToggleComments,
   commentsCount
 }: PaperContentProps) => {
+  
+  const renderEquation = (equation: string) => {
+    return (
+      <div className="paper-equation">
+        {equation}
+      </div>
+    );
+  };
+
+  const processContent = (content: string) => {
+    // Split content by equations and render them specially
+    const parts = content.split(/(\*\*Equation \d+:\*\*[^*]+\*[^*]+\*)/g);
+    
+    return parts.map((part, index) => {
+      if (part.match(/\*\*Equation \d+:\*\*/)) {
+        const equationMatch = part.match(/\*\*Equation \d+:\*\*\s*([^*]+)\s*\*([^*]+)\*/);
+        if (equationMatch) {
+          const [, title, equation] = equationMatch;
+          return (
+            <div key={index}>
+              <div className="font-semibold text-sm mb-1">{title.trim()}</div>
+              {renderEquation(equation.trim())}
+            </div>
+          );
+        }
+      }
+      
+      // Process other formatting
+      const formattedContent = part
+        .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+        .replace(/¹(\d)/g, '<sup>$1</sup>')
+        .replace(/₂/g, '<sub>2</sub>')
+        .replace(/ᵢ/g, '<sub>i</sub>')
+        .replace(/⟩/g, '⟩')
+        .replace(/⟨/g, '⟨')
+        .replace(/∘/g, '∘')
+        .replace(/Σ/g, 'Σ')
+        .replace(/ℝ/g, 'ℝ')
+        .replace(/π/g, 'π')
+        .replace(/α/g, 'α')
+        .replace(/β/g, 'β')
+        .replace(/θ/g, 'θ')
+        .replace(/φ/g, 'φ')
+        .split('\n')
+        .map((paragraph, pIndex) => {
+          if (paragraph.trim()) {
+            return (
+              <p key={pIndex} className="mb-3" dangerouslySetInnerHTML={{__html: paragraph}} />
+            );
+          }
+          return null;
+        })
+        .filter(Boolean);
+      
+      return <div key={index}>{formattedContent}</div>;
+    });
+  };
+
   return (
     <div className="w-full min-h-screen">
       {/* Top Toolbar */}
       <div className="sticky top-0 z-30 bg-white border-b border-gray-200 shadow-sm">
-        <div className="max-w-4xl mx-auto px-8 py-4">
+        <div className="max-w-6xl mx-auto px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <Button
@@ -68,27 +126,40 @@ const PaperContent = ({
 
       {/* Paper Content */}
       <div className="overflow-y-auto">
-        <div className="p-8 max-w-4xl mx-auto">
+        <div className="p-8 max-w-6xl mx-auto">
           <div className="bg-white rounded-lg shadow p-8 relative">
             {currentVersion && (
-              <div className="prose max-w-none" onMouseUp={onTextSelection}>
-                {currentVersion.content.map((section) => (
+              <div className="paper-content" onMouseUp={onTextSelection}>
+                {currentVersion.content.map((section, sectionIndex) => (
                   <div key={section.id} className="mb-8">
                     {section.type === 'title' && (
-                      <h1 className="text-3xl font-serif font-bold mb-4">{section.content}</h1>
-                    )}
-                    {section.type === 'abstract' && (
-                      <div>
-                        <h2 className="text-xl font-serif font-semibold mb-2">Abstract</h2>
-                        <p className="text-gray-700 leading-relaxed">{section.content}</p>
+                      <div className="paper-single-column mb-8">
+                        <h1 className="text-2xl font-serif font-bold text-center mb-2">
+                          {section.content}
+                        </h1>
+                        <div className="text-center text-sm text-gray-600 mb-4">
+                          Published in Nature • Volume 621 • 15 May 2025 • DOI: 10.1038/s41586-025-07123-4
+                        </div>
                       </div>
                     )}
+                    
+                    {section.type === 'abstract' && (
+                      <div className="paper-single-column mb-8">
+                        <h2 className="paper-section-title">Abstract</h2>
+                        <div className="text-sm leading-relaxed font-medium bg-gray-50 p-4 rounded border-l-4 border-blue-500">
+                          {processContent(section.content)}
+                        </div>
+                      </div>
+                    )}
+                    
                     {section.type !== 'title' && section.type !== 'abstract' && (
-                      <div>
-                        <h2 className="text-xl font-serif font-semibold mb-2 capitalize">
-                          {section.type}
+                      <div className={sectionIndex === currentVersion.content.length - 1 ? "paper-single-column" : "paper-two-column"}>
+                        <h2 className="paper-section-title text-center mb-4 uppercase tracking-wide" style={{columnSpan: 'all'}}>
+                          {section.type === 'methodology' ? 'Methods' : section.type}
                         </h2>
-                        <p className="text-gray-700 leading-relaxed">{section.content}</p>
+                        <div className="text-sm leading-relaxed">
+                          {processContent(section.content)}
+                        </div>
                       </div>
                     )}
                   </div>

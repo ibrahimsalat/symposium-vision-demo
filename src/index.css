@@ -69,4 +69,57 @@
   .card {
     @apply bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow p-6;
   }
+
+  /* Scientific Paper Styling */
+  .paper-content {
+    @apply text-sm leading-relaxed;
+    font-family: 'Times New Roman', serif;
+    line-height: 1.6;
+  }
+
+  .paper-two-column {
+    column-count: 2;
+    column-gap: 24px;
+    column-rule: 1px solid #e5e5e5;
+  }
+
+  .paper-single-column {
+    column-count: 1;
+  }
+
+  .paper-section-title {
+    @apply text-base font-bold mt-6 mb-3;
+    break-after: avoid;
+    page-break-after: avoid;
+    column-span: none;
+  }
+
+  .paper-subsection-title {
+    @apply text-sm font-semibold mt-4 mb-2;
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  .paper-equation {
+    @apply my-4 p-3 bg-gray-50 rounded border-l-4 border-blue-200;
+    break-inside: avoid;
+    page-break-inside: avoid;
+    font-family: 'Computer Modern', 'Times New Roman', serif;
+    text-align: center;
+    font-style: italic;
+  }
+
+  .paper-figure-ref {
+    @apply font-medium text-blue-600;
+  }
+
+  .paper-citation {
+    @apply text-blue-700 font-medium;
+  }
+
+  @media (max-width: 768px) {
+    .paper-two-column {
+      column-count: 1;
+    }
+  }
 }
