@@ -32,22 +32,23 @@ const Landing = () => {
                   Sign Up for Early Access
                 </Button>
               </SignupDialog>
-              <Button 
+              <Button asChild
                 variant="outline" 
-                onClick={scrollToFeatures}
                 className="flex items-center justify-center gap-2 btn-secondary text-lg h-12"
               >
-                <Play size={18} />
-                Watch the Demo
+                <Link to="/papers?tour=true">
+                  <Play size={18} />
+                  Watch the Demo
+                </Link>
               </Button>
             </div>
             
             <div className="mt-16 relative animate-fade-in">
               <div className="absolute inset-0 bg-gradient-to-t from-lightgray to-transparent z-10 pointer-events-none"></div>
               <img 
-                src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&q=80&w=2670" 
-                alt="Symposium Platform Preview" 
-                className="w-full h-auto rounded-lg shadow-xl" 
+                src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200" 
+                alt="Academic Collaboration Platform" 
+                className="w-full max-w-2xl mx-auto h-64 object-cover rounded-lg shadow-xl" 
               />
             </div>
           </div>
@@ -109,22 +110,22 @@ const Landing = () => {
                 <Link to="/feed">Explore the Feed</Link>
               </Button>
             </div>
-            <div className="bg-gray-100 rounded-lg overflow-hidden shadow-md order-1 md:order-2 aspect-video flex items-center justify-center">
+            <div className="bg-gray-100 rounded-lg overflow-hidden shadow-md order-1 md:order-2 h-48 flex items-center justify-center">
               <img 
-                src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&q=80&w=2670" 
-                alt="For You Feed" 
-                className="w-full h-auto"
+                src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800" 
+                alt="Academic Social Feed" 
+                className="w-full h-full object-cover"
               />
             </div>
           </div>
           
           {/* Feature 2 */}
           <div className="grid md:grid-cols-2 gap-12 mb-24 items-center">
-            <div className="bg-gray-100 rounded-lg overflow-hidden shadow-md aspect-video flex items-center justify-center">
+            <div className="bg-gray-100 rounded-lg overflow-hidden shadow-md h-48 flex items-center justify-center">
               <img 
-                src="https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&q=80&w=2670" 
-                alt="Peer-to-Peer Checking" 
-                className="w-full h-auto" 
+                src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800" 
+                alt="Paper Collaboration System" 
+                className="w-full h-full object-cover" 
               />
             </div>
             <div>
@@ -155,11 +156,11 @@ const Landing = () => {
                 <Link to="/events">Discover Events</Link>
               </Button>
             </div>
-            <div className="bg-gray-100 rounded-lg overflow-hidden shadow-md order-1 md:order-2 aspect-video flex items-center justify-center">
+            <div className="bg-gray-100 rounded-lg overflow-hidden shadow-md order-1 md:order-2 h-48 flex items-center justify-center">
               <img 
-                src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&q=80&w=2670" 
-                alt="Events & Workshops" 
-                className="w-full h-auto"
+                src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&q=80&w=800" 
+                alt="Academic Events & Workshops" 
+                className="w-full h-full object-cover"
               />
             </div>
           </div>

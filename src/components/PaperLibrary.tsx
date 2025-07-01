@@ -1,9 +1,10 @@
 
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 import { Search, Filter, Calendar, Users, FileText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import PaperTour from './PaperTour';
 
 type Paper = {
   id: string;
@@ -71,6 +72,16 @@ const mockPapers: Paper[] = [
 const PaperLibrary = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedField, setSelectedField] = useState('All Fields');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [showTour, setShowTour] = useState(false);
+
+  useEffect(() => {
+    if (searchParams.get('tour') === 'true') {
+      setShowTour(true);
+      // Remove tour param from URL
+      setSearchParams(new URLSearchParams());
+    }
+  }, [searchParams, setSearchParams]);
   
   const fields = ['All Fields', 'Quantum Computing', 'Biotechnology', 'Climate Science', 'Artificial Intelligence'];
   
@@ -91,7 +102,7 @@ const PaperLibrary = () => {
         </div>
 
         {/* Search and Filters */}
-        <div className="bg-white rounded-lg shadow p-6 mb-8">
+        <div className="bg-white rounded-lg shadow p-6 mb-8" data-tour="search">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="md:col-span-2">
               <div className="relative">
@@ -121,8 +132,8 @@ const PaperLibrary = () => {
 
         {/* Papers Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {filteredPapers.map(paper => (
-            <Card key={paper.id} className="hover:shadow-lg transition-shadow cursor-pointer">
+          {filteredPapers.map((paper, index) => (
+            <Card key={paper.id} className="hover:shadow-lg transition-shadow cursor-pointer" data-tour={index === 0 ? "paper-card" : undefined}>
               <CardHeader>
                 <div className="flex justify-between items-start mb-2">
                   <span className="text-xs font-medium text-teal bg-teal/10 px-2 py-1 rounded">
@@ -168,7 +179,7 @@ const PaperLibrary = () => {
                   </div>
                   
                   <div className="pt-2">
-                    <Button asChild size="sm" className="w-full bg-teal hover:bg-teal-light">
+                    <Button asChild size="sm" className="w-full bg-teal hover:bg-teal-light" data-tour={index === 0 ? "read-paper" : undefined}>
                       <Link to={`/papers/${paper.id}`}>Read Paper</Link>
                     </Button>
                   </div>
@@ -185,6 +196,8 @@ const PaperLibrary = () => {
             <p className="text-gray-500">Try adjusting your search terms or filters</p>
           </div>
         )}
+
+        <PaperTour isActive={showTour} onComplete={() => setShowTour(false)} />
       </div>
     </div>
   );

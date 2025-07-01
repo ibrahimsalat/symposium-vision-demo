@@ -88,7 +88,7 @@ const EnhancedPaperReader = () => {
             className="fixed inset-0 bg-black/20 z-40"
             onClick={() => setShowCommentsSidebar(false)}
           />
-          <div className="fixed right-0 top-0 h-full z-50 animate-slide-in-right">
+          <div className="fixed right-0 top-0 h-full z-50 animate-slide-in-right" data-tour="comments">
             <PaperCommentsSidebar
               comments={comments}
               highlights={highlights}
