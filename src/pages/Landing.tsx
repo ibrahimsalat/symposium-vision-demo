@@ -47,36 +47,67 @@ const Landing = () => {
       </section>
       
       {/* Problem We're Solving */}
-      <section className="py-20 bg-navy text-white">
-        <div className="container-custom">
+      <section className="py-20 bg-gradient-to-br from-navy via-navy to-teal text-white relative overflow-hidden">
+        {/* Background decoration */}
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent skew-y-1"></div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-teal/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/5 rounded-full blur-2xl"></div>
+        
+        <div className="container-custom relative z-10">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">The Problems We're Solving</h2>
+            <div className="text-center mb-16 animate-fade-in">
+              <h2 className="text-3xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-white to-teal bg-clip-text text-transparent">
+                The Problems We're Solving
+              </h2>
+              <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+                Academia needs a revolution. Here's what we're changing.
+              </p>
+            </div>
             
             <div className="grid md:grid-cols-3 gap-8 mb-16">
-              <div className="bg-navy/50 p-8 rounded-lg border border-white/10 hover:border-teal/50 transition-colors">
-                <h3 className="text-xl font-medium mb-4">Unfair Compensation</h3>
-                <p className="text-gray-300">
+              <div className="group bg-white/10 backdrop-blur-sm p-8 rounded-2xl border border-white/20 hover:border-teal/50 transition-all duration-300 hover:transform hover:scale-105 animate-fade-in">
+                <div className="w-16 h-16 bg-gradient-to-br from-red-400 to-red-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold mb-4">Unfair Compensation</h3>
+                <p className="text-gray-300 leading-relaxed">
                   Researchers aren't paid for their papers or reviews, while publishers profit immensely from their work.
                 </p>
               </div>
               
-              <div className="bg-navy/50 p-8 rounded-lg border border-white/10 hover:border-teal/50 transition-colors">
-                <h3 className="text-xl font-medium mb-4">Centralized Control</h3>
-                <p className="text-gray-300">
+              <div className="group bg-white/10 backdrop-blur-sm p-8 rounded-2xl border border-white/20 hover:border-teal/50 transition-all duration-300 hover:transform hover:scale-105 animate-fade-in">
+                <div className="w-16 h-16 bg-gradient-to-br from-orange-400 to-orange-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold mb-4">Centralized Control</h3>
+                <p className="text-gray-300 leading-relaxed">
                   Peer review is centralized and lacks transparency, creating bottlenecks and potential bias in research evaluation.
                 </p>
               </div>
               
-              <div className="bg-navy/50 p-8 rounded-lg border border-white/10 hover:border-teal/50 transition-colors">
-                <h3 className="text-xl font-medium mb-4">Fragmented Collaboration</h3>
-                <p className="text-gray-300">
+              <div className="group bg-white/10 backdrop-blur-sm p-8 rounded-2xl border border-white/20 hover:border-teal/50 transition-all duration-300 hover:transform hover:scale-105 animate-fade-in">
+                <div className="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold mb-4">Fragmented Collaboration</h3>
+                <p className="text-gray-300 leading-relaxed">
                   Collaboration across institutions is fragmented and rare, limiting the potential for groundbreaking research.
                 </p>
               </div>
             </div>
             
-            <div className="bg-teal p-8 md:p-12 rounded-lg shadow-lg text-center">
-              <h3 className="text-2xl md:text-3xl font-bold">Academia is broken. Symposium is the fix.</h3>
+            <div className="relative group animate-fade-in">
+              <div className="absolute inset-0 bg-gradient-to-r from-teal via-teal-light to-teal rounded-2xl blur opacity-50 group-hover:opacity-75 transition-opacity"></div>
+              <div className="relative bg-gradient-to-r from-teal to-teal-light p-8 md:p-12 rounded-2xl shadow-2xl text-center transform group-hover:scale-105 transition-all duration-300">
+                <h3 className="text-2xl md:text-4xl font-bold mb-4">Academia is broken. Symposium is the fix.</h3>
+                <p className="text-lg opacity-90">Join the movement to democratize scientific knowledge</p>
+              </div>
             </div>
           </div>
         </div>
