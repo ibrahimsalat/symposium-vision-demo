@@ -42,15 +42,6 @@ const Landing = () => {
                 </Link>
               </Button>
             </div>
-            
-            <div className="mt-16 relative animate-fade-in">
-              <div className="absolute inset-0 bg-gradient-to-t from-lightgray to-transparent z-10 pointer-events-none"></div>
-              <img 
-                src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200" 
-                alt="Academic Collaboration Platform" 
-                className="w-full max-w-2xl mx-auto h-64 object-cover rounded-lg shadow-xl" 
-              />
-            </div>
           </div>
         </div>
       </section>
@@ -110,24 +101,10 @@ const Landing = () => {
                 <Link to="/feed">Explore the Feed</Link>
               </Button>
             </div>
-            <div className="bg-gray-100 rounded-lg overflow-hidden shadow-md order-1 md:order-2 h-48 flex items-center justify-center">
-              <img 
-                src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800" 
-                alt="Academic Social Feed" 
-                className="w-full h-full object-cover"
-              />
-            </div>
           </div>
           
           {/* Feature 2 */}
           <div className="grid md:grid-cols-2 gap-12 mb-24 items-center">
-            <div className="bg-gray-100 rounded-lg overflow-hidden shadow-md h-48 flex items-center justify-center">
-              <img 
-                src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800" 
-                alt="Paper Collaboration System" 
-                className="w-full h-full object-cover" 
-              />
-            </div>
             <div>
               <h3 className="text-2xl font-bold mb-4 text-navy">Decentralized Peer-to-Peer Checking</h3>
               <p className="text-gray-600 mb-4 text-lg">
@@ -155,13 +132,6 @@ const Landing = () => {
               <Button asChild variant="outline" className="border-teal text-teal hover:bg-teal/5">
                 <Link to="/events">Discover Events</Link>
               </Button>
-            </div>
-            <div className="bg-gray-100 rounded-lg overflow-hidden shadow-md order-1 md:order-2 h-48 flex items-center justify-center">
-              <img 
-                src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&q=80&w=800" 
-                alt="Academic Events & Workshops" 
-                className="w-full h-full object-cover"
-              />
             </div>
           </div>
         </div>
