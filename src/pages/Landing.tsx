@@ -114,37 +114,97 @@ const Landing = () => {
       </section>
       
       {/* Features Section */}
-      <section ref={featuresRef} className="py-20 md:py-32" id="features">
-        <div className="container-custom">
-          <h2 className="text-3xl md:text-4xl font-bold mb-16 text-center">Key Features</h2>
+      <section ref={featuresRef} className="py-20 md:py-32 bg-gradient-to-br from-lightgray via-white to-teal/5 relative overflow-hidden" id="features">
+        {/* Background decoration */}
+        <div className="absolute inset-0 bg-gradient-to-l from-transparent via-teal/5 to-transparent -skew-y-1"></div>
+        <div className="absolute top-0 left-0 w-96 h-96 bg-teal/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 right-0 w-64 h-64 bg-navy/5 rounded-full blur-2xl"></div>
+        
+        <div className="container-custom relative z-10">
+          <div className="text-center mb-20 animate-fade-in">
+            <h2 className="text-3xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-navy to-teal bg-clip-text text-transparent">
+              Key Features
+            </h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Powerful tools designed to transform how scientists collaborate and share knowledge
+            </p>
+          </div>
           
           {/* Feature 1 */}
           <div className="grid md:grid-cols-2 gap-12 mb-24 items-center">
-            <div className="order-2 md:order-1">
-              <h3 className="text-2xl font-bold mb-4 text-navy">For You Feed</h3>
-              <p className="text-gray-600 mb-4 text-lg">
+            <div className="order-2 md:order-1 animate-fade-in">
+              <div className="flex items-start gap-4 mb-6">
+                <div className="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold mb-2 text-navy">For You Feed</h3>
+                </div>
+              </div>
+              <p className="text-gray-600 mb-4 text-lg leading-relaxed">
                 A personalized feed of research updates, posts, and ideas tailored to your academic interests and network.
               </p>
-              <p className="text-gray-700 mb-6">
+              <p className="text-gray-700 mb-6 leading-relaxed">
                 Researchers can post hot takes, share exciting trends, and spark open discussion without the constraints of formal publication.
               </p>
-              <Button asChild variant="outline" className="border-teal text-teal hover:bg-teal/5">
+              <Button asChild variant="outline" className="border-teal text-teal hover:bg-teal/10 hover:border-teal/70 transition-all duration-300">
                 <Link to="/feed">Explore the Feed</Link>
               </Button>
+            </div>
+            <div className="order-1 md:order-2 animate-fade-in">
+              <div className="relative group">
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-blue-600 rounded-2xl blur opacity-25 group-hover:opacity-40 transition-opacity"></div>
+                <div className="relative bg-white/80 backdrop-blur-sm p-8 rounded-2xl border border-blue-200/50 shadow-lg">
+                  <div className="text-center">
+                    <div className="w-20 h-20 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full mx-auto mb-4 flex items-center justify-center">
+                      <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                      </svg>
+                    </div>
+                    <p className="font-medium text-gray-700">Personalized Research Feed</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           
           {/* Feature 2 */}
           <div className="grid md:grid-cols-2 gap-12 mb-24 items-center">
-            <div>
-              <h3 className="text-2xl font-bold mb-4 text-navy">Decentralized Peer-to-Peer Checking</h3>
-              <p className="text-gray-600 mb-4 text-lg">
+            <div className="animate-fade-in">
+              <div className="relative group">
+                <div className="absolute inset-0 bg-gradient-to-r from-green-400 to-green-600 rounded-2xl blur opacity-25 group-hover:opacity-40 transition-opacity"></div>
+                <div className="relative bg-white/80 backdrop-blur-sm p-8 rounded-2xl border border-green-200/50 shadow-lg">
+                  <div className="text-center">
+                    <div className="w-20 h-20 bg-gradient-to-br from-green-400 to-green-600 rounded-full mx-auto mb-4 flex items-center justify-center">
+                      <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
+                      </svg>
+                    </div>
+                    <p className="font-medium text-gray-700">Collaborative Annotations</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="animate-fade-in">
+              <div className="flex items-start gap-4 mb-6">
+                <div className="w-16 h-16 bg-gradient-to-br from-green-400 to-green-600 rounded-2xl flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold mb-2 text-navy">Decentralized Peer-to-Peer Checking</h3>
+                </div>
+              </div>
+              <p className="text-gray-600 mb-4 text-lg leading-relaxed">
                 Comment directly on specific sections of scientific papers with a collaborative annotation system.
               </p>
-              <p className="text-gray-700 mb-6">
+              <p className="text-gray-700 mb-6 leading-relaxed">
                 A new way to discuss, critique, and collaboratively improve science — like Google Docs for academic research.
               </p>
-              <Button asChild variant="outline" className="border-teal text-teal hover:bg-teal/5">
+              <Button asChild variant="outline" className="border-teal text-teal hover:bg-teal/10 hover:border-teal/70 transition-all duration-300">
                 <Link to="/papers">See it in Action</Link>
               </Button>
             </div>
@@ -152,17 +212,41 @@ const Landing = () => {
           
           {/* Feature 3 */}
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="order-2 md:order-1">
-              <h3 className="text-2xl font-bold mb-4 text-navy">Events & Workshops</h3>
-              <p className="text-gray-600 mb-4 text-lg">
+            <div className="order-2 md:order-1 animate-fade-in">
+              <div className="flex items-start gap-4 mb-6">
+                <div className="w-16 h-16 bg-gradient-to-br from-purple-400 to-purple-600 rounded-2xl flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold mb-2 text-navy">Events & Workshops</h3>
+                </div>
+              </div>
+              <p className="text-gray-600 mb-4 text-lg leading-relaxed">
                 Host and discover academic events, panels, and workshops within your research community.
               </p>
-              <p className="text-gray-700 mb-6">
+              <p className="text-gray-700 mb-6 leading-relaxed">
                 Promote knowledge sharing and community-driven learning across institutional boundaries.
               </p>
-              <Button asChild variant="outline" className="border-teal text-teal hover:bg-teal/5">
+              <Button asChild variant="outline" className="border-teal text-teal hover:bg-teal/10 hover:border-teal/70 transition-all duration-300">
                 <Link to="/events">Discover Events</Link>
               </Button>
+            </div>
+            <div className="order-1 md:order-2 animate-fade-in">
+              <div className="relative group">
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-purple-600 rounded-2xl blur opacity-25 group-hover:opacity-40 transition-opacity"></div>
+                <div className="relative bg-white/80 backdrop-blur-sm p-8 rounded-2xl border border-purple-200/50 shadow-lg">
+                  <div className="text-center">
+                    <div className="w-20 h-20 bg-gradient-to-br from-purple-400 to-purple-600 rounded-full mx-auto mb-4 flex items-center justify-center">
+                      <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                      </svg>
+                    </div>
+                    <p className="font-medium text-gray-700">Academic Events Hub</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
