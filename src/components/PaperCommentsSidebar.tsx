@@ -152,15 +152,40 @@ const PaperCommentsSidebar = ({
           <TabsTrigger value="versions" className="text-xs">Versions</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="comments" className="flex-1 overflow-hidden">
+        <TabsContent value="comments" className="flex-1 flex flex-col overflow-hidden">
           <div className="p-4 border-b">
             <h3 className="font-medium">Comments ({sortedComments.length})</h3>
             <p className="text-sm text-gray-500">Sorted by importance</p>
           </div>
-          <ScrollArea className="h-full">
+          
+          {/* Comment Input */}
+          <div className="p-4 border-b bg-gray-50">
+            <div className="flex gap-3">
+              <Avatar className="h-8 w-8 bg-teal text-white">
+                <span className="text-xs font-medium">YS</span>
+              </Avatar>
+              <div className="flex-1">
+                <textarea
+                  placeholder="Add a comment or ask a question about this paper..."
+                  className="w-full border border-gray-200 rounded-lg p-3 text-sm min-h-[80px] focus:ring-2 focus:ring-teal/20 focus:border-teal transition-colors resize-none"
+                />
+                <div className="flex justify-between items-center mt-2">
+                  <div className="flex items-center gap-2 text-xs text-gray-500">
+                    <span>💡 Tip: Select text to comment on specific sections</span>
+                  </div>
+                  <Button size="sm" className="bg-teal hover:bg-teal-light">
+                    <MessageCircle size={14} className="mr-1" />
+                    Comment
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <ScrollArea className="flex-1">
             <div className="p-4 space-y-4">
               {sortedComments.map(comment => (
-                <div key={comment.id} className={`border rounded-lg p-4 ${comment.isHighlighted ? 'border-teal bg-teal/5' : 'border-gray-200'}`}>
+                <div key={comment.id} className={`border rounded-lg p-4 transition-all hover:shadow-md ${comment.isHighlighted ? 'border-teal bg-teal/5' : 'border-gray-200'}`}>
                   <div className="flex items-start gap-3">
                     <Avatar className="h-8 w-8 bg-teal/20 text-teal">
                       <span className="text-xs font-medium">{comment.author.initials}</span>
@@ -176,44 +201,66 @@ const PaperCommentsSidebar = ({
                       <p className="text-xs text-gray-500 mb-2">{comment.author.affiliation}</p>
                       
                       {comment.selectedText && (
-                        <div className="bg-gray-100 p-2 rounded text-xs mb-2">
-                          <span className="font-medium">Selected text: </span>
-                          "{comment.selectedText}"
+                        <div className="bg-blue-50 border-l-4 border-blue-400 p-3 rounded-r text-xs mb-3">
+                          <span className="font-medium text-blue-900">Selected text: </span>
+                          <span className="text-blue-800">"{comment.selectedText}"</span>
                         </div>
                       )}
                       
-                      <p className="text-sm text-gray-700 mb-2">{comment.text}</p>
+                      <p className="text-sm text-gray-700 mb-3 leading-relaxed">{comment.text}</p>
                       
                       <div className="flex items-center gap-4 text-xs text-gray-500">
-                        <button className="flex items-center gap-1 hover:text-teal">
+                        <button className="flex items-center gap-1 hover:text-teal transition-colors">
                           <ThumbsUp size={12} />
                           {comment.likes}
                         </button>
                         <span>{comment.timestamp}</span>
-                        <button className="hover:text-teal">Reply</button>
+                        <button className="hover:text-teal transition-colors">Reply</button>
+                        <button className="hover:text-red-500 transition-colors">Report</button>
                       </div>
 
                       {comment.replies.length > 0 && (
-                        <div className="mt-3 pl-4 border-l border-gray-200 space-y-2">
+                        <div className="mt-4 pl-4 border-l-2 border-gray-100 space-y-3">
                           {comment.replies.map(reply => (
                             <div key={reply.id} className="text-sm">
                               <div className="flex items-center gap-2 mb-1">
                                 <span className="font-medium">{reply.author.name}</span>
                                 <span className="text-xs text-gray-500">{reply.timestamp}</span>
                               </div>
-                              <p className="text-gray-700">{reply.text}</p>
-                              <button className="flex items-center gap-1 text-xs text-gray-500 hover:text-teal mt-1">
+                              <p className="text-gray-700 mb-2">{reply.text}</p>
+                              <button className="flex items-center gap-1 text-xs text-gray-500 hover:text-teal transition-colors">
                                 <ThumbsUp size={10} />
                                 {reply.likes}
                               </button>
                             </div>
                           ))}
+                          
+                          {/* Reply Input */}
+                          <div className="pt-2">
+                            <div className="flex gap-2">
+                              <Input
+                                placeholder="Write a reply..."
+                                className="flex-1 h-8 text-xs"
+                              />
+                              <Button size="sm" variant="ghost" className="h-8 px-2 text-xs">
+                                Reply
+                              </Button>
+                            </div>
+                          </div>
                         </div>
                       )}
                     </div>
                   </div>
                 </div>
               ))}
+              
+              {sortedComments.length === 0 && (
+                <div className="text-center py-8 text-gray-500">
+                  <MessageCircle size={48} className="mx-auto mb-4 text-gray-300" />
+                  <p className="text-sm">No comments yet</p>
+                  <p className="text-xs">Be the first to start a discussion!</p>
+                </div>
+              )}
             </div>
           </ScrollArea>
         </TabsContent>
