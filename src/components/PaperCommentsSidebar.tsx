@@ -318,7 +318,7 @@ const PaperCommentsSidebar = ({
           </div>
 
           {/* Chat Messages */}
-          <ScrollArea className="flex-1 p-4">
+          <ScrollArea className="flex-1 p-4 h-0">
             <div className="space-y-4">
               {chatMessages.map((message) => (
                 <div
