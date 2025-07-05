@@ -167,5 +167,158 @@ export const mockComments: Comment[] = [
     selectedText: "encoding layer that maps classical data into the quantum Hilbert space",
     likes: 15,
     replies: []
+  },
+  {
+    id: "4",
+    author: {
+      name: "Dr. Emma Kim",
+      initials: "EK",
+      affiliation: "IBM Quantum Research",
+      isVerified: true,
+      reputation: 94
+    },
+    text: "Excellent work! The parameter-shift rule implementation is particularly elegant. Have you considered using higher-order finite differences for better gradient estimation accuracy?",
+    timestamp: "8 hours ago",
+    sectionId: "method-3",
+    selectedText: "∂⟨H⟩/∂θᵢ = (1/2)[⟨H⟩_{θᵢ + π/2} - ⟨H⟩_{θᵢ - π/2}]",
+    likes: 14,
+    replies: [
+      {
+        id: "4-1",
+        author: {
+          name: "Dr. Yuki Tanaka",
+          initials: "YT",
+          affiliation: "RIKEN Center for Quantum Computing",
+          isVerified: true,
+          reputation: 89
+        },
+        text: "Higher-order methods do provide better accuracy but at the cost of more circuit evaluations. For NISQ devices, the trade-off favors the parameter-shift rule.",
+        timestamp: "6 hours ago",
+        sectionId: "method-3",
+        selectedText: "",
+        likes: 8,
+        replies: []
+      }
+    ],
+    isHighlighted: false
+  },
+  {
+    id: "5",
+    author: {
+      name: "Alex Chen",
+      initials: "AC",
+      affiliation: "PhD Student, MIT",
+      isVerified: false,
+      reputation: 73
+    },
+    text: "This is groundbreaking! Could this approach be extended to reinforcement learning problems? The quantum advantage in exploration could be particularly useful for RL agents.",
+    timestamp: "12 hours ago",
+    sectionId: "discussion-3",
+    selectedText: null,
+    likes: 7,
+    replies: [
+      {
+        id: "5-1",
+        author: {
+          name: "Dr. Michael Johnson",
+          initials: "MJ",
+          affiliation: "Stanford University Department of Computer Science",
+          isVerified: true,
+          reputation: 91
+        },
+        text: "That's an interesting idea! Quantum RL is an active area of research. The superposition could indeed help with exploration-exploitation trade-offs.",
+        timestamp: "10 hours ago",
+        sectionId: "discussion-3",
+        selectedText: "",
+        likes: 6,
+        replies: []
+      }
+    ],
+    isHighlighted: false
+  },
+  {
+    id: "6",
+    author: {
+      name: "Dr. Robert Martinez",
+      initials: "RM",
+      affiliation: "Microsoft Quantum Development",
+      isVerified: true,
+      reputation: 85
+    },
+    text: "The exponential speedup claim needs more rigorous justification. The comparison seems to be against basic classical algorithms rather than state-of-the-art optimized implementations. How does this compare to modern Adam or AdamW optimizers?",
+    timestamp: "1 day ago",
+    sectionId: "results-3",
+    selectedText: "providing a quadratic speedup over classical counterparts",
+    likes: 21,
+    replies: [
+      {
+        id: "6-1",
+        author: {
+          name: "Dr. Li Zhang",
+          initials: "LZ",
+          affiliation: "MIT Computer Science and Artificial Intelligence Laboratory",
+          isVerified: true,
+          reputation: 98
+        },
+        text: "Valid point. We did compare against Adam and AdamW in the supplementary materials. The quantum advantage holds, though the gap narrows with modern optimizers.",
+        timestamp: "20 hours ago",
+        sectionId: "results-3",
+        selectedText: "",
+        likes: 11,
+        replies: []
+      }
+    ],
+    isHighlighted: true
+  },
+  {
+    id: "7",
+    author: {
+      name: "Dr. Lisa Wong",
+      initials: "LW",
+      affiliation: "Princeton Institute for Advanced Study",
+      isVerified: true,
+      reputation: 96
+    },
+    text: "The amplitude encoding approach is clever, but it requires exponential classical preprocessing for normalization. Doesn't this negate the quantum advantage?",
+    timestamp: "2 days ago",
+    sectionId: "method-3",
+    selectedText: "|ψ_in⟩ = (1/√N) Σᵢ xᵢ|i⟩ where N = Σᵢ |xᵢ|²",
+    likes: 16,
+    replies: [],
+    isHighlighted: false
+  },
+  {
+    id: "8",
+    author: {
+      name: "Marcus Thompson",
+      initials: "MT",
+      affiliation: "Graduate Student, Caltech",
+      isVerified: false,
+      reputation: 42
+    },
+    text: "Amazing paper! I'm trying to reproduce the MNIST results but getting different accuracy numbers. Are the hyperparameters available in the supplementary materials?",
+    timestamp: "3 days ago",
+    sectionId: "results-3",
+    selectedText: null,
+    likes: 5,
+    replies: [
+      {
+        id: "8-1",
+        author: {
+          name: "Dr. Sanjay Patel",
+          initials: "SP",
+          affiliation: "MIT Department of Physics",
+          isVerified: true,
+          reputation: 93
+        },
+        text: "All hyperparameters and code will be released on GitHub after publication. Feel free to reach out if you need specific details.",
+        timestamp: "2 days ago",
+        sectionId: "results-3",
+        selectedText: "",
+        likes: 8,
+        replies: []
+      }
+    ],
+    isHighlighted: false
   }
 ];

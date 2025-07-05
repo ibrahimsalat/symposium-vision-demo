@@ -441,28 +441,68 @@ const PaperCommentsSidebar = ({
           </div>
         </TabsContent>
 
-        <TabsContent value="versions" className="flex-1">
-          <div className="p-4">
-            <h3 className="font-medium mb-4">Version History</h3>
-            <div className="space-y-3">
+        <TabsContent value="versions" className="flex-1 flex flex-col overflow-hidden m-0">
+          <div className="p-4 border-b flex-shrink-0">
+            <h3 className="font-medium">Version History ({paper.versions.length})</h3>
+            <p className="text-xs text-gray-500">Compare different versions of this paper</p>
+          </div>
+          
+          <ScrollArea className="flex-1 min-h-0">
+            <div className="p-4 space-y-3">
               {paper.versions.map(version => (
                 <div 
                   key={version.version}
-                  className={`p-3 border rounded cursor-pointer transition-colors ${
-                    selectedVersion === version.version ? 'border-teal bg-teal/5' : 'border-gray-200 hover:bg-gray-50'
+                  className={`p-4 border rounded-lg cursor-pointer transition-all hover:shadow-md ${
+                    selectedVersion === version.version ? 
+                    'border-teal bg-teal/5 shadow-sm' : 
+                    'border-gray-200 hover:bg-gray-50'
                   }`}
                   onClick={() => setSelectedVersion(version.version)}
                 >
-                  <div className="flex items-center gap-2 mb-1">
-                    <GitBranch size={14} />
-                    <span className="font-medium text-sm">{version.version}</span>
-                    <span className="text-xs text-gray-500">{version.date}</span>
+                  <div className="flex items-start gap-3">
+                    <div className={`p-2 rounded-full ${
+                      selectedVersion === version.version ? 
+                      'bg-teal text-white' : 
+                      'bg-gray-100 text-gray-600'
+                    }`}>
+                      <GitBranch size={16} />
+                    </div>
+                    
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className={`font-semibold text-sm ${
+                          selectedVersion === version.version ? 'text-teal' : 'text-gray-900'
+                        }`}>
+                          {version.version}
+                        </span>
+                        {selectedVersion === version.version && (
+                          <span className="text-xs bg-teal text-white px-2 py-0.5 rounded-full">
+                            Current
+                          </span>
+                        )}
+                        <span className="text-xs text-gray-500 ml-auto">{version.date}</span>
+                      </div>
+                      
+                      <p className="text-sm text-gray-700 mb-3 leading-relaxed">{version.changes}</p>
+                      
+                      <div className="flex items-center gap-4 text-xs text-gray-500">
+                        <span className="flex items-center gap-1">
+                          <span className="w-2 h-2 bg-green-400 rounded-full"></span>
+                          Published
+                        </span>
+                        <button className="hover:text-teal transition-colors">
+                          View Changes
+                        </button>
+                        <button className="hover:text-teal transition-colors">
+                          Download PDF
+                        </button>
+                      </div>
+                    </div>
                   </div>
-                  <p className="text-xs text-gray-600">{version.changes}</p>
                 </div>
               ))}
             </div>
-          </div>
+          </ScrollArea>
         </TabsContent>
       </Tabs>
     </div>
