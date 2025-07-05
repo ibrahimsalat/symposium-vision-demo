@@ -1,11 +1,10 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Avatar } from '@/components/ui/avatar';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { ThumbsUp, Bot, GitBranch, Badge, X, Send, Sparkles, MessageCircle, Copy, ThumbsDown } from 'lucide-react';
+import { ThumbsUp, Bot, GitBranch, Badge, X } from 'lucide-react';
 import { Comment, Highlight, PaperMetadata } from '@/types/paper';
 
 interface PaperCommentsSidebarProps {
@@ -30,104 +29,6 @@ const PaperCommentsSidebar = ({
   onClose
 }: PaperCommentsSidebarProps) => {
   const sortedComments = [...comments].sort((a, b) => b.likes - a.likes);
-  
-  // AI Chat state
-  interface ChatMessage {
-    id: string;
-    role: 'user' | 'assistant';
-    content: string;
-    timestamp: string;
-  }
-
-  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([
-    {
-      id: '1',
-      role: 'assistant',
-      content: 'Hello! I\'m your AI research assistant. I\'ve analyzed this paper and I\'m ready to help you understand its key concepts, methodology, and implications. What would you like to know?',
-      timestamp: new Date().toLocaleTimeString(),
-    }
-  ]);
-  const [inputMessage, setInputMessage] = useState('');
-  const [isTyping, setIsTyping] = useState(false);
-  const chatEndRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  const suggestedQuestions = [
-    "What's the main contribution of this paper?",
-    "Can you explain the methodology?",
-    "What are the key findings?",
-    "How does this compare to previous work?",
-    "What are the limitations?"
-  ];
-
-  // Auto-scroll to bottom when new messages arrive
-  useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [chatMessages]);
-
-  const simulateAIResponse = (userMessage: string) => {
-    setIsTyping(true);
-    
-    // Simulate AI thinking time
-    setTimeout(() => {
-      let response = '';
-      
-      if (userMessage.toLowerCase().includes('contribution') || userMessage.toLowerCase().includes('main')) {
-        response = 'The main contribution of this paper is a novel quantum-enhanced neural network architecture that achieves exponential speedup over classical methods. The key innovation lies in the amplitude encoding scheme and the use of variational quantum circuits for feature extraction.';
-      } else if (userMessage.toLowerCase().includes('methodology') || userMessage.toLowerCase().includes('method')) {
-        response = 'The methodology combines quantum amplitude encoding with variational quantum circuits. The authors use a hybrid classical-quantum approach where classical preprocessing prepares the data, quantum circuits perform feature extraction, and classical neural networks handle the final classification.';
-      } else if (userMessage.toLowerCase().includes('findings') || userMessage.toLowerCase().includes('results')) {
-        response = 'Key findings include: 1) 10x speedup on classification tasks, 2) Better noise resilience than expected, 3) Scalability up to 50 qubits demonstrated. The results show particular promise for high-dimensional data processing.';
-      } else if (userMessage.toLowerCase().includes('limitations')) {
-        response = 'The main limitations are: 1) Current implementation limited to 50 qubits, 2) No analysis of noise effects in real quantum hardware, 3) Benchmarks only on synthetic datasets, 4) Scalability to larger problems unclear.';
-      } else if (userMessage.toLowerCase().includes('compare') || userMessage.toLowerCase().includes('previous')) {
-        response = 'Compared to previous quantum ML approaches, this work shows significant improvements in both speed and accuracy. Unlike gate-based approaches, the amplitude encoding reduces circuit depth by 60%. The variational approach also outperforms fixed quantum feature maps.';
-      } else {
-        response = 'That\'s an interesting question! Based on my analysis of the paper, I can provide more specific insights if you could clarify what aspect you\'d like me to focus on. Feel free to ask about the methodology, results, or implications.';
-      }
-      
-      setChatMessages(prev => [...prev, {
-        id: Date.now().toString(),
-        role: 'assistant' as const,
-        content: response,
-        timestamp: new Date().toLocaleTimeString(),
-      }]);
-      setIsTyping(false);
-    }, 1000 + Math.random() * 2000); // Random delay between 1-3 seconds
-  };
-
-  const handleSendMessage = () => {
-    if (!inputMessage.trim()) return;
-    
-    const userMessage = {
-      id: Date.now().toString(),
-      role: 'user' as const,
-      content: inputMessage,
-      timestamp: new Date().toLocaleTimeString(),
-    };
-    
-    setChatMessages(prev => [...prev, userMessage]);
-    setInputMessage('');
-    
-    // Simulate AI response
-    simulateAIResponse(inputMessage);
-  };
-
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      handleSendMessage();
-    }
-  };
-
-  const handleSuggestedQuestion = (question: string) => {
-    setInputMessage(question);
-    inputRef.current?.focus();
-  };
-
-  const copyMessage = (content: string) => {
-    navigator.clipboard.writeText(content);
-  };
 
   return (
     <div className="w-96 bg-white border-l border-gray-200 h-full shadow-lg">
@@ -236,143 +137,50 @@ const PaperCommentsSidebar = ({
           </div>
         </TabsContent>
 
-        <TabsContent value="ai" className="flex-1 flex flex-col overflow-hidden">
-          {/* Chat Header */}
-          <div className="p-4 border-b bg-gradient-to-r from-teal/5 to-blue/5">
-            <div className="flex items-center gap-2 mb-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-teal to-blue rounded-full flex items-center justify-center">
-                <Bot size={16} className="text-white" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-sm">AI Research Assistant</h3>
-                <p className="text-xs text-gray-500">Powered by Claude</p>
-              </div>
-            </div>
-            
-            {/* Suggested Questions */}
-            {chatMessages.length === 1 && (
-              <div className="space-y-2">
-                <p className="text-xs text-gray-600 mb-2">Try asking:</p>
-                <div className="flex flex-wrap gap-1">
-                  {suggestedQuestions.slice(0, 3).map((question, index) => (
-                    <Button
-                      key={index}
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => handleSuggestedQuestion(question)}
-                      className="text-xs h-6 px-2 bg-white/50 hover:bg-white border border-gray-200"
-                    >
-                      {question}
-                    </Button>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Chat Messages */}
-          <ScrollArea className="flex-1 p-4">
+        <TabsContent value="ai" className="flex-1">
+          <div className="p-4">
+            <h3 className="font-medium mb-4">AI Insights</h3>
             <div className="space-y-4">
-              {chatMessages.map((message) => (
-                <div
-                  key={message.id}
-                  className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
-                >
-                  <div className={`max-w-[80%] ${message.role === 'user' ? 'order-2' : 'order-1'}`}>
-                    <div
-                      className={`rounded-2xl px-4 py-3 text-sm ${
-                        message.role === 'user'
-                          ? 'bg-teal text-white'
-                          : 'bg-gray-100 text-gray-800'
-                      }`}
-                    >
-                      {message.content}
-                    </div>
-                    <div className="flex items-center gap-2 mt-1">
-                      <span className="text-xs text-gray-500">{message.timestamp}</span>
-                      {message.role === 'assistant' && (
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => copyMessage(message.content)}
-                          className="h-4 w-4 p-0 hover:bg-gray-200"
-                        >
-                          <Copy size={10} />
-                        </Button>
-                      )}
-                    </div>
-                  </div>
-                  
-                  <Avatar className={`h-6 w-6 ${message.role === 'user' ? 'order-1 ml-2' : 'order-2 mr-2'}`}>
-                    {message.role === 'user' ? (
-                      <span className="text-xs bg-teal text-white">YS</span>
-                    ) : (
-                      <Bot size={12} className="text-teal" />
-                    )}
-                  </Avatar>
-                </div>
-              ))}
-              
-              {/* Typing Indicator */}
-              {isTyping && (
-                <div className="flex justify-start">
-                  <div className="max-w-[80%] order-1">
-                    <div className="bg-gray-100 rounded-2xl px-4 py-3 text-sm">
-                      <div className="flex space-x-1">
-                        <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                        <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                        <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-                      </div>
-                    </div>
-                  </div>
-                  <Avatar className="h-6 w-6 order-2 mr-2">
-                    <Bot size={12} className="text-teal" />
-                  </Avatar>
-                </div>
-              )}
-              
-              <div ref={chatEndRef} />
-            </div>
-          </ScrollArea>
+              <Card>
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-sm flex items-center gap-2">
+                    <Bot size={14} />
+                    Summary
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-gray-600">
+                    This paper presents a quantum-enhanced neural network approach that claims exponential speedup over classical methods. Key innovations include amplitude encoding and variational quantum circuits.
+                  </p>
+                </CardContent>
+              </Card>
 
-          {/* Message Input */}
-          <div className="p-4 border-t bg-gray-50">
-            <div className="flex gap-2">
-              <Input
-                ref={inputRef}
-                value={inputMessage}
-                onChange={(e) => setInputMessage(e.target.value)}
-                onKeyPress={handleKeyPress}
-                placeholder="Ask about the paper..."
-                className="flex-1"
-                disabled={isTyping}
-              />
-              <Button
-                onClick={handleSendMessage}
-                disabled={!inputMessage.trim() || isTyping}
-                size="sm"
-                className="px-3"
-              >
-                <Send size={14} />
-              </Button>
+              <Card>
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-sm">Strengths</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <ul className="text-sm text-gray-600 space-y-1">
+                    <li>• Novel quantum encoding approach</li>
+                    <li>• Solid experimental validation</li>
+                    <li>• Clear performance improvements</li>
+                  </ul>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-sm">Areas for Improvement</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <ul className="text-sm text-gray-600 space-y-1">
+                    <li>• Limited discussion of noise effects</li>
+                    <li>• Scalability concerns not addressed</li>
+                    <li>• Need more diverse benchmarks</li>
+                  </ul>
+                </CardContent>
+              </Card>
             </div>
-            
-            {/* Quick Actions */}
-            {chatMessages.length > 1 && (
-              <div className="flex gap-1 mt-2">
-                {suggestedQuestions.slice(3).map((question, index) => (
-                  <Button
-                    key={index}
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => handleSuggestedQuestion(question)}
-                    className="text-xs h-6 px-2 bg-white hover:bg-gray-100"
-                  >
-                    {question.split(' ').slice(0, 2).join(' ')}...
-                  </Button>
-                ))}
-              </div>
-            )}
           </div>
         </TabsContent>
 
