@@ -238,7 +238,7 @@ const PaperCommentsSidebar = ({
 
         {/* AI Chat Tab */}
         <TabsContent value="ai" className="flex-1 flex flex-col min-h-0 m-0">
-          <div className="p-4 border-b border-border bg-muted/50 flex-shrink-0">
+          <div className="p-4 border-b border-border flex-shrink-0">
             <div className="flex items-center gap-2 mb-2">
               <div className="w-8 h-8 bg-gradient-to-br from-primary to-primary/80 rounded-full flex items-center justify-center">
                 <Bot size={16} className="text-primary-foreground" />
@@ -332,7 +332,7 @@ const PaperCommentsSidebar = ({
             </div>
           </ScrollArea>
 
-          <div className="p-4 border-t border-border bg-muted/50 flex-shrink-0">
+          <div className="p-4 border-t border-border flex-shrink-0">
             <div className="flex gap-2">
               <Input
                 ref={inputRef}
