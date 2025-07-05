@@ -166,13 +166,182 @@ const PaperCommentsSidebar = ({
         </TabsContent>
 
         {/* Highlights Tab */}
-        
+        <TabsContent value="highlights" className="flex-1 flex flex-col min-h-0 m-0">
+          <div className="p-4 border-b border-border flex-shrink-0">
+            <h3 className="font-medium">Highlights ({highlights.length})</h3>
+            <p className="text-sm text-muted-foreground">Your saved highlights</p>
+          </div>
+          
+          <ScrollArea className="flex-1 min-h-0">
+            <div className="p-4 space-y-4">
+              {highlights.map(highlight => (
+                <div key={highlight.id} className="border border-border rounded-lg p-4">
+                  <div className={`border-l-4 p-3 rounded-r text-xs mb-3 ${
+                    highlight.color === 'yellow' ? 'bg-yellow-50 border-yellow-400' :
+                    highlight.color === 'blue' ? 'bg-blue-50 border-blue-400' :
+                    highlight.color === 'green' ? 'bg-green-50 border-green-400' :
+                    'bg-red-50 border-red-400'
+                  }`}>
+                    <span className="font-medium">Highlighted text: </span>
+                    <span>"{highlight.selectedText}"</span>
+                  </div>
+                  {highlight.note && (
+                    <p className="text-sm mb-2">{highlight.note}</p>
+                  )}
+                  <div className="flex items-center justify-between text-xs text-muted-foreground">
+                    <span className="capitalize">{highlight.color} highlight</span>
+                    <button className="hover:text-primary transition-colors">Remove</button>
+                  </div>
+                </div>
+              ))}
+              
+              {highlights.length === 0 && (
+                <div className="text-center py-8 text-muted-foreground">
+                  <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-muted flex items-center justify-center">
+                    <span className="text-lg">✨</span>
+                  </div>
+                  <p className="text-sm">No highlights yet</p>
+                  <p className="text-xs">Select text to create highlights!</p>
+                </div>
+              )}
+            </div>
+          </ScrollArea>
+        </TabsContent>
 
         {/* AI Chat Tab */}
-        
+        <TabsContent value="ai" className="flex-1 flex flex-col min-h-0 m-0">
+          <div className="p-4 border-b border-border flex-shrink-0">
+            <h3 className="font-medium flex items-center gap-2">
+              <Bot size={16} />
+              AI Research Assistant
+            </h3>
+            <p className="text-sm text-muted-foreground">Ask questions about this paper</p>
+          </div>
+          
+          <ScrollArea className="flex-1 min-h-0">
+            <div className="p-4 space-y-4">
+              {chatMessages.map(message => (
+                <div key={message.id} className={`flex gap-3 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                  {message.role === 'assistant' && (
+                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                      <Bot size={14} className="text-primary" />
+                    </div>
+                  )}
+                  <div className={`max-w-[80%] p-3 rounded-lg ${
+                    message.role === 'user' 
+                      ? 'bg-primary text-primary-foreground' 
+                      : 'bg-muted'
+                  }`}>
+                    <p className="text-sm">{message.content}</p>
+                    <p className="text-xs opacity-70 mt-1">{message.timestamp}</p>
+                  </div>
+                  {message.role === 'user' && (
+                    <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center flex-shrink-0">
+                      <span className="text-xs font-medium">You</span>
+                    </div>
+                  )}
+                </div>
+              ))}
+              
+              {isTyping && (
+                <div className="flex gap-3 justify-start">
+                  <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                    <Bot size={14} className="text-primary" />
+                  </div>
+                  <div className="bg-muted p-3 rounded-lg">
+                    <div className="flex gap-1">
+                      <div className="w-2 h-2 bg-muted-foreground rounded-full animate-pulse"></div>
+                      <div className="w-2 h-2 bg-muted-foreground rounded-full animate-pulse delay-100"></div>
+                      <div className="w-2 h-2 bg-muted-foreground rounded-full animate-pulse delay-200"></div>
+                    </div>
+                  </div>
+                </div>
+              )}
+              <div ref={chatEndRef} />
+            </div>
+          </ScrollArea>
+          
+          <div className="p-4 border-t border-border flex-shrink-0">
+            {suggestedQuestions.length > 0 && chatMessages.length === 1 && (
+              <div className="mb-4 space-y-2">
+                <p className="text-xs text-muted-foreground">Suggested questions:</p>
+                {suggestedQuestions.map((question, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleSuggestedQuestion(question)}
+                    className="block w-full text-left text-xs p-2 rounded border border-border hover:bg-muted transition-colors"
+                  >
+                    {question}
+                  </button>
+                ))}
+              </div>
+            )}
+            
+            <div className="flex gap-2">
+              <Input
+                ref={inputRef}
+                value={inputMessage}
+                onChange={(e) => setInputMessage(e.target.value)}
+                onKeyPress={handleKeyPress}
+                placeholder="Ask about this paper..."
+                className="flex-1"
+                disabled={isTyping}
+              />
+              <Button 
+                onClick={handleSendMessage} 
+                disabled={!inputMessage.trim() || isTyping}
+                size="sm"
+              >
+                <Send size={14} />
+              </Button>
+            </div>
+          </div>
+        </TabsContent>
 
         {/* Versions Tab */}
-        
+        <TabsContent value="versions" className="flex-1 flex flex-col min-h-0 m-0">
+          <div className="p-4 border-b border-border flex-shrink-0">
+            <h3 className="font-medium flex items-center gap-2">
+              <GitBranch size={16} />
+              Version History
+            </h3>
+            <p className="text-sm text-muted-foreground">Track paper revisions</p>
+          </div>
+          
+          <ScrollArea className="flex-1 min-h-0">
+            <div className="p-4 space-y-4">
+              {paper.versions.map((version, index) => (
+                <div key={version.id} className={`border rounded-lg p-4 transition-all cursor-pointer ${
+                  selectedVersion === version.version ? 'border-primary bg-primary/5' : 'border-border hover:shadow-sm'
+                }`} onClick={() => setSelectedVersion(version.version)}>
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-2">
+                      <span className="font-medium text-sm">{version.version}</span>
+                      {index === 0 && (
+                        <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded">Latest</span>
+                      )}
+                      {selectedVersion === version.version && (
+                        <span className="text-xs bg-green-100 text-green-600 px-2 py-1 rounded">Current</span>
+                      )}
+                    </div>
+                    <span className="text-xs text-muted-foreground">{version.date}</span>
+                  </div>
+                  
+                  <p className="text-sm text-muted-foreground mb-3">{version.changes}</p>
+                  
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <span>{version.content.length} sections</span>
+                    <span>•</span>
+                    <button className="hover:text-primary transition-colors flex items-center gap-1">
+                      <Copy size={12} />
+                      Compare
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </ScrollArea>
+        </TabsContent>
       </Tabs>
     </div>;
 };
