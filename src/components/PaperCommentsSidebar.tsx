@@ -152,14 +152,14 @@ const PaperCommentsSidebar = ({
           <TabsTrigger value="versions" className="text-xs">Versions</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="comments" className="flex-1 flex flex-col overflow-hidden">
-          <div className="p-4 border-b">
+        <TabsContent value="comments" className="flex-1 flex flex-col overflow-hidden m-0">
+          <div className="p-4 border-b flex-shrink-0">
             <h3 className="font-medium">Comments ({sortedComments.length})</h3>
             <p className="text-sm text-gray-500">Sorted by importance</p>
           </div>
           
           {/* Comment Input */}
-          <div className="p-4 border-b bg-gray-50">
+          <div className="p-4 border-b bg-gray-50 flex-shrink-0">
             <div className="flex gap-3">
               <Avatar className="h-8 w-8 bg-teal text-white">
                 <span className="text-xs font-medium">YS</span>
@@ -182,7 +182,7 @@ const PaperCommentsSidebar = ({
             </div>
           </div>
           
-          <ScrollArea className="flex-1">
+          <ScrollArea className="flex-1 min-h-0">
             <div className="p-4 space-y-4">
               {sortedComments.map(comment => (
                 <div key={comment.id} className={`border rounded-lg p-4 transition-all hover:shadow-md ${comment.isHighlighted ? 'border-teal bg-teal/5' : 'border-gray-200'}`}>
@@ -265,22 +265,40 @@ const PaperCommentsSidebar = ({
           </ScrollArea>
         </TabsContent>
 
-        <TabsContent value="highlights" className="flex-1">
-          <div className="p-4">
-            <h3 className="font-medium mb-4">My Highlights</h3>
-            {highlights.length === 0 ? (
-              <p className="text-sm text-gray-500 italic">No highlights yet. Select text to add highlights.</p>
-            ) : (
-              <div className="space-y-2">
-                {highlights.map(highlight => (
-                  <div key={highlight.id} className="p-2 border rounded">
-                    <div className={`w-3 h-3 rounded-full bg-${highlight.color}-300 inline-block mr-2`}></div>
-                    <span className="text-sm">{highlight.selectedText}</span>
-                  </div>
-                ))}
-              </div>
-            )}
+        <TabsContent value="highlights" className="flex-1 flex flex-col overflow-hidden m-0">
+          <div className="p-4 border-b flex-shrink-0">
+            <h3 className="font-medium">My Highlights ({highlights.length})</h3>
           </div>
+          
+          <ScrollArea className="flex-1 min-h-0">
+            <div className="p-4">
+              {highlights.length === 0 ? (
+                <div className="text-center py-8 text-gray-500">
+                  <span className="text-4xl mb-4 block">📝</span>
+                  <p className="text-sm mb-2">No highlights yet</p>
+                  <p className="text-xs">Select text to add highlights.</p>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {highlights.map(highlight => (
+                    <div key={highlight.id} className="p-3 border rounded-lg hover:shadow-sm transition-all">
+                      <div className="flex items-start gap-3">
+                        <div className={`w-4 h-4 rounded-full bg-${highlight.color}-300 flex-shrink-0 mt-0.5`}></div>
+                        <div className="flex-1">
+                          <p className="text-sm text-gray-700 mb-2 leading-relaxed">{highlight.selectedText}</p>
+                          <div className="flex items-center gap-2 text-xs text-gray-500">
+                            <span>Section {highlight.sectionId}</span>
+                            <span>•</span>
+                            <span className="capitalize">{highlight.color} highlight</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </ScrollArea>
         </TabsContent>
 
         <TabsContent value="ai" className="flex-1 flex flex-col overflow-hidden">
