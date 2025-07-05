@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Avatar } from '@/components/ui/avatar';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ThumbsUp, Bot, GitBranch, Badge, X } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { ThumbsUp, Bot, GitBranch, Badge, X, Send } from 'lucide-react';
 import { Comment, Highlight, PaperMetadata } from '@/types/paper';
 
 interface PaperCommentsSidebarProps {
@@ -29,12 +29,28 @@ const PaperCommentsSidebar = ({
   onClose
 }: PaperCommentsSidebarProps) => {
   const sortedComments = [...comments].sort((a, b) => b.likes - a.likes);
+  const [showAIChat, setShowAIChat] = useState(false);
+  const [chatMessages, setChatMessages] = useState([
+    { role: 'assistant', content: 'Hi! I can help you understand this paper. What would you like to know?' }
+  ]);
+  const [inputMessage, setInputMessage] = useState('');
 
   return (
     <div className="w-96 bg-white border-l border-gray-200 h-full shadow-lg">
       {/* Header with close button */}
       <div className="flex items-center justify-between p-4 border-b">
-        <h2 className="text-lg font-semibold">Discussions</h2>
+        <div className="flex items-center gap-2">
+          <h2 className="text-lg font-semibold">Discussions</h2>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setShowAIChat(true)}
+            className="flex items-center gap-1 h-8 px-2"
+          >
+            <Bot size={14} />
+            <span className="text-xs">AI</span>
+          </Button>
+        </div>
         <Button
           variant="ghost"
           size="sm"
@@ -46,10 +62,9 @@ const PaperCommentsSidebar = ({
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="h-full flex flex-col">
-        <TabsList className="grid w-full grid-cols-4 rounded-none border-b">
+        <TabsList className="grid w-full grid-cols-3 rounded-none border-b">
           <TabsTrigger value="comments" className="text-xs">Comments</TabsTrigger>
           <TabsTrigger value="highlights" className="text-xs">Highlights</TabsTrigger>
-          <TabsTrigger value="ai" className="text-xs">AI Insights</TabsTrigger>
           <TabsTrigger value="versions" className="text-xs">Versions</TabsTrigger>
         </TabsList>
 
@@ -137,52 +152,6 @@ const PaperCommentsSidebar = ({
           </div>
         </TabsContent>
 
-        <TabsContent value="ai" className="flex-1">
-          <div className="p-4">
-            <h3 className="font-medium mb-4">AI Insights</h3>
-            <div className="space-y-4">
-              <Card>
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-sm flex items-center gap-2">
-                    <Bot size={14} />
-                    Summary
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-gray-600">
-                    This paper presents a quantum-enhanced neural network approach that claims exponential speedup over classical methods. Key innovations include amplitude encoding and variational quantum circuits.
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-sm">Strengths</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ul className="text-sm text-gray-600 space-y-1">
-                    <li>• Novel quantum encoding approach</li>
-                    <li>• Solid experimental validation</li>
-                    <li>• Clear performance improvements</li>
-                  </ul>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-sm">Areas for Improvement</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ul className="text-sm text-gray-600 space-y-1">
-                    <li>• Limited discussion of noise effects</li>
-                    <li>• Scalability concerns not addressed</li>
-                    <li>• Need more diverse benchmarks</li>
-                  </ul>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </TabsContent>
 
         <TabsContent value="versions" className="flex-1">
           <div className="p-4">
@@ -208,6 +177,85 @@ const PaperCommentsSidebar = ({
           </div>
         </TabsContent>
       </Tabs>
+
+      {/* AI Chat Overlay */}
+      {showAIChat && (
+        <div className="absolute inset-0 bg-white z-10 flex flex-col">
+          {/* Chat Header */}
+          <div className="flex items-center justify-between p-4 border-b">
+            <div className="flex items-center gap-2">
+              <Bot size={16} />
+              <h3 className="font-semibold">AI Assistant</h3>
+            </div>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setShowAIChat(false)}
+              className="h-8 w-8 p-0"
+            >
+              <X size={16} />
+            </Button>
+          </div>
+
+          {/* Chat Messages */}
+          <ScrollArea className="flex-1 p-4">
+            <div className="space-y-4">
+              {chatMessages.map((message, index) => (
+                <div
+                  key={index}
+                  className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                >
+                  <div
+                    className={`max-w-[80%] p-3 rounded-lg text-sm ${
+                      message.role === 'user'
+                        ? 'bg-primary text-primary-foreground'
+                        : 'bg-muted'
+                    }`}
+                  >
+                    {message.content}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </ScrollArea>
+
+          {/* Chat Input */}
+          <div className="p-4 border-t">
+            <div className="flex gap-2">
+              <Input
+                value={inputMessage}
+                onChange={(e) => setInputMessage(e.target.value)}
+                placeholder="Ask about this paper..."
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter') {
+                    if (inputMessage.trim()) {
+                      setChatMessages([...chatMessages, 
+                        { role: 'user', content: inputMessage },
+                        { role: 'assistant', content: 'I understand your question about the paper. Let me analyze that for you...' }
+                      ]);
+                      setInputMessage('');
+                    }
+                  }
+                }}
+              />
+              <Button
+                size="sm"
+                onClick={() => {
+                  if (inputMessage.trim()) {
+                    setChatMessages([...chatMessages, 
+                      { role: 'user', content: inputMessage },
+                      { role: 'assistant', content: 'I understand your question about the paper. Let me analyze that for you...' }
+                    ]);
+                    setInputMessage('');
+                  }
+                }}
+              >
+                <Send size={14} />
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
