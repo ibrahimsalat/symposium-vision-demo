@@ -43,15 +43,6 @@ const Footer = () => {
               <li><Link to="/events" className="text-gray-300 hover:text-teal">Events</Link></li>
             </ul>
           </div>
-          <div>
-            <h3 className="font-medium text-lg mb-4">Company</h3>
-            <ul className="space-y-2">
-              <li><a href="#" className="text-gray-300 hover:text-teal">About</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-teal">Careers</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-teal">Privacy</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-teal">Terms</a></li>
-            </ul>
-          </div>
         </div>
         <div className="mt-12 pt-8 border-t border-gray-700 text-gray-400 text-sm">
           <p>© 2025 Symposium. All rights reserved.</p>
