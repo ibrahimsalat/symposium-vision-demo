@@ -57,17 +57,45 @@ const SignupDialog = ({ children }: SignupDialogProps) => {
     },
   });
 
-  const onSubmit = (data: SignupFormData) => {
-    console.log('Signup form submitted:', data);
-    
-    toast({
-      title: "Welcome to Symposium!",
-      description: "You're now on our early access list. We'll keep you updated on our progress!",
+const onSubmit = async (data: SignupFormData) => {
+  try {
+    const response = await fetch("https://formspree.io/f/mnnvygol", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        email: data.email,
+        profession: data.profession,
+        organization: data.organization || "",
+        feedback: data.feedback || ""
+      })
     });
-    
-    form.reset();
-    setOpen(false);
-  };
+
+    if (response.ok) {
+      toast({
+        title: "Welcome to Symposium!",
+        description: "You're now on our early access list. We'll keep you updated on our progress!"
+      });
+      form.reset();
+      setOpen(false);
+    } else {
+      toast({
+        title: "Oops!",
+        description: "Something went wrong. Please try again later.",
+        variant: "destructive"
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    toast({
+      title: "Network error",
+      description: "Please check your connection and try again.",
+      variant: "destructive"
+    });
+  }
+};
+
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
