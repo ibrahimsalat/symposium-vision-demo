@@ -263,10 +263,10 @@ const Landing = () => {
                 "This feels like what academia should have always been — open, connected, and rewarding."
               </p>
               <div className="flex items-center">
-                <div className="w-12 h-12 bg-teal/20 rounded-full flex items-center justify-center text-teal font-serif font-bold text-lg">LC</div>
+                <div className="w-12 h-12 bg-teal/20 rounded-full flex items-center justify-center text-teal font-serif font-bold text-lg">VJ</div>
                 <div className="ml-4">
-                  <p className="font-medium">Dr. Leila Cheng</p>
-                  <p className="text-gray-500 text-sm">Neuroscientist</p>
+                  <p className="font-medium">Vishal Joshi</p>
+                  <p className="text-gray-500 text-sm">PhD student</p>
                 </div>
               </div>
             </div>
@@ -276,10 +276,10 @@ const Landing = () => {
                 "Finally, a place where we can talk science outside the walls of paywalled journals."
               </p>
               <div className="flex items-center">
-                <div className="w-12 h-12 bg-teal/20 rounded-full flex items-center justify-center text-teal font-serif font-bold text-lg">AB</div>
+                <div className="w-12 h-12 bg-teal/20 rounded-full flex items-center justify-center text-teal font-serif font-bold text-lg">CL</div>
                 <div className="ml-4">
-                  <p className="font-medium">Prof. Ahmed Badawi</p>
-                  <p className="text-gray-500 text-sm">Climate Researcher</p>
+                  <p className="font-medium">Claire Lebrun</p>
+                  <p className="text-gray-500 text-sm">PhD student</p>
                 </div>
               </div>
             </div>
@@ -289,10 +289,10 @@ const Landing = () => {
                 "The peer-to-peer checking feature is brilliant. Transparent, fast, and community-driven."
               </p>
               <div className="flex items-center">
-                <div className="w-12 h-12 bg-teal/20 rounded-full flex items-center justify-center text-teal font-serif font-bold text-lg">SH</div>
+                <div className="w-12 h-12 bg-teal/20 rounded-full flex items-center justify-center text-teal font-serif font-bold text-lg">IS</div>
                 <div className="ml-4">
-                  <p className="font-medium">Sophie Hall</p>
-                  <p className="text-gray-500 text-sm">PhD Student</p>
+                  <p className="font-medium">Ibrahim Salat</p>
+                  <p className="text-gray-500 text-sm">Imaging Scientist</p>
                 </div>
               </div>
             </div>
@@ -302,10 +302,10 @@ const Landing = () => {
                 "Symposium isn't just a product, it's a movement."
               </p>
               <div className="flex items-center">
-                <div className="w-12 h-12 bg-teal/20 rounded-full flex items-center justify-center text-teal font-serif font-bold text-lg">RN</div>
+                <div className="w-12 h-12 bg-teal/20 rounded-full flex items-center justify-center text-teal font-serif font-bold text-lg">LF</div>
                 <div className="ml-4">
-                  <p className="font-medium">Dr. Rachel Novak</p>
-                  <p className="text-gray-500 text-sm">Astrophysicist</p>
+                  <p className="font-medium">Leander Fernandez</p>
+                  <p className="text-gray-500 text-sm">Data Analyst</p>
                 </div>
               </div>
             </div>
